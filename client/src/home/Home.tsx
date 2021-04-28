@@ -1,7 +1,7 @@
-import { createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Box, createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
 import { Container } from 'next/app';
 import React from 'react'
-import { Row } from '../categories/Row';
+import { Category } from '../categories/Category';
 import { NavBar } from '../navbar/NavBar';
 
 interface HomeProps {
@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
         },
         categorySection: {
-            padding: "50px",
+            paddingLeft: "50px",
+            paddingTop: "50px",
         }
     }),
 );
@@ -26,9 +27,10 @@ export const Home: React.FC<HomeProps> = ({ }) => {
         <Container>
             <NavBar />
 
-            <Container className={classes.categorySection}>
-                <Row />
-            </Container>
+            <Box className={classes.categorySection}>
+                <Category title="Trending" />
+                <Category title="Trending" />
+            </Box>
 
         </Container>
     );
