@@ -20,6 +20,7 @@ export default function MyApp(props: AppProps) {
     <React.Fragment>
       <Head>
         <title>Shoppies</title>
+        <link rel="stylesheet" href="https://use.typekit.net/huv7mfv.css"></link>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>
