@@ -3,8 +3,6 @@ import { Home } from '../src/home/Home';
 
 export default function Index() {
   return (
-    <div>
       <Home />
-    </div>
   );
 }

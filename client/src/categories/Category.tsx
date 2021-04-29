@@ -13,10 +13,8 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: "25px",
         },
         categoryHeading: {
-            // color: "#054A49"
             fontWeight: 700,
         },
-
     }),
 );
 

@@ -1,8 +1,7 @@
-import { Box, createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
-import { Container } from 'next/app';
+import { Box, createStyles, Icon, makeStyles, Theme, Typography } from '@material-ui/core';
 import React from 'react'
-import { Category } from '../categories/Category';
-import { NavBar } from '../navbar/NavBar';
+import { Row } from '../categories/Row';
+import SearchBar from '../searchbar/SearchBar';
 
 interface HomeProps {
 
@@ -11,27 +10,27 @@ interface HomeProps {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            flexGrow: 1,
+            backgroundColor: "#28D984",
         },
-        categorySection: {
-            paddingLeft: "50px",
-            paddingTop: "50px",
+        container: {
+            minWidth: "500px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
         }
     }),
 );
 
-
 export const Home: React.FC<HomeProps> = ({ }) => {
     const classes = useStyles();
     return (
-        <Container>
-            <NavBar />
-
-            <Box className={classes.categorySection}>
-                <Category title="Trending" />
-                <Category title="Trending" />
+        <Box minHeight="100vh" minWidth="100%">
+            <Box justifyContent="center" alignItems="center" display="flex" flexDirection="column" minHeight="50vh" minWidth="100%">
+                <Icon />
+                <Typography variant="h3">Shoppies</Typography>
+                <SearchBar />
             </Box>
-
-        </Container>
+        </Box>
     );
 }
