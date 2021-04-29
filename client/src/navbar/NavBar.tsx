@@ -1,11 +1,10 @@
-import { AppBar, Container, createStyles, makeStyles, TextField, Theme, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Container, createStyles, makeStyles, TextField, Toolbar, Typography } from '@material-ui/core'
 import React from 'react'
-import SearchBar from "material-ui-search-bar"
 
 interface NavBarProps {
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             flexGrow: 1,

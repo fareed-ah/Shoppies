@@ -1,4 +1,4 @@
-import { Box, createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Box, createStyles, makeStyles, Typography } from '@material-ui/core';
 import React from 'react'
 import { Row } from './Row';
 
@@ -6,7 +6,7 @@ interface CategoryProps {
     title: string
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             flexGrow: 1,
