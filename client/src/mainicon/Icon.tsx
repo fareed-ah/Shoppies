@@ -1,4 +1,4 @@
-import { Container, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { Container, createStyles, makeStyles } from '@material-ui/core';
 import { Movie } from '@material-ui/icons';
 import React from 'react'
 
@@ -6,7 +6,7 @@ interface IconProps {
 
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             backgroundColor: "#28D984",

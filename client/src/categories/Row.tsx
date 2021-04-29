@@ -1,4 +1,4 @@
-import { makeStyles, Theme, createStyles, GridList, GridListTile, GridListTileBar, IconButton } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, GridList, GridListTile, GridListTileBar } from '@material-ui/core';
 import React from 'react'
 
 interface RowProps {
