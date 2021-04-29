@@ -1,4 +1,4 @@
-import { AppBar, createStyles, makeStyles, TextField, Theme, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Container, createStyles, makeStyles, TextField, Theme, Toolbar, Typography } from '@material-ui/core'
 import React from 'react'
 import SearchBar from "material-ui-search-bar"
 
@@ -10,16 +10,17 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             flexGrow: 1,
         },
-        menuButton: {
-            alignSelf: "flex-end",
+        searchbar: {
+            alignSelf: "center",
+            minWidth: "250px",
         },
         title: {
-            flexGrow: 1,
             font: "Myriad",
             fontWeight: 'bold',
         },
         appbar: {
-
+            display: "flex",
+            flexDirection: "row",
         },
     }),
 );
@@ -30,14 +31,18 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
         <div className={classes.root}>
             <AppBar position="static" color="inherit">
                 <Toolbar className={classes.appbar} color="inherit">
-                    <Typography variant="h6" className={classes.title}>
-                        shoppies
+                    <Container>
+                        <Typography variant="h6" className={classes.title}>
+                            shoppies
                      </Typography>
-                    <TextField
-                        id="search-bar"
-                        placeholder="Search..."
-                        size="medium"
-                    />
+
+                        <TextField
+                            id="search-bar"
+                            placeholder="Search for a movie..."
+                            size="small"
+                            className={classes.searchbar}
+                        />
+                    </Container>
                 </Toolbar>
             </AppBar>
         </div>
