@@ -1,8 +1,9 @@
 import { makeStyles, Theme, createStyles, GridList, GridListTile, GridListTileBar } from '@material-ui/core';
 import React from 'react'
+import { Movie } from '../home/Home';
 
 interface RowProps {
-
+    movieData: Movie[]
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,54 +29,17 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }),
 );
-const tileData = [
-    {
-        title: "Inception",
-        img: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    },
-    {
-        title: "Inception",
-        img: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    },
-    {
-        title: "Inception",
-        img: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    },
-    {
-        title: "Inception",
-        img: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    },
-    {
-        title: "Inception",
-        img: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    },
-    {
-        title: "Inception",
-        img: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    },
-    {
-        title: "Inception",
-        img: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    },
-    {
-        title: "Inception",
-        img: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    },
-    {
-        title: "Inception",
-        img: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    },
-]
-export const Row: React.FC<RowProps> = ({ }) => {
+
+export const Row: React.FC<RowProps> = ({ movieData }: RowProps) => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <GridList className={classes.gridList} cellHeight={222} cols={6.5}>
-                {tileData.map((tile) => (
-                    <GridListTile key={tile.img}>
-                        <img src={tile.img} alt={tile.title} style={{ height: "100%" }} />
+            <GridList className={classes.gridList} cellHeight={444} cols={7.5}>
+                {movieData.map((movie) => (
+                    <GridListTile key={movie.imdbID}>
+                        <img src={movie.Poster} alt={movie.Title} style={{ height: "100%" }} />
                         <GridListTileBar
-                            title={tile.title}
+                            title={movie.Title}
                             classes={{
                                 root: classes.titleBar,
                                 title: classes.title,
