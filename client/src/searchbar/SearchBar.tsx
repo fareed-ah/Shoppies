@@ -43,7 +43,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults }: Search
 
     const handleSubmit = (evt: { preventDefault: () => void; }) => {
         evt.preventDefault();
-        axios.post(`http://www.omdbapi.com/?apikey=dd016357&s=${title}`)
+        axios.post(`https://www.omdbapi.com/?apikey=dd016357&s=${title}`)
+
             .then(res => {
                 console.log(res);
                 console.log(res.data);
