@@ -66,7 +66,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults }: Search
                 className={classes.input}
                 placeholder="Search for a movie"
             />
-            <IconButton type="reset" className={classes.iconButton}>
+            <IconButton type="reset" className={classes.iconButton}
+                onClick={() => {
+                    setTitle('')
+                    setSearchResults([]);
+                }}>
                 <Clear />
             </IconButton>
         </Paper>

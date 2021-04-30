@@ -1,7 +1,8 @@
-import { Box, Button, Icon, Typography } from '@material-ui/core';
-import React, { useState } from 'react'
+import { Box, Button, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react'
 import { Row } from '../categories/Row';
 import { SearchBar } from '../searchbar/SearchBar';
+import { CustomSnackbar } from '../snackbar/CustomSnackbar';
 
 interface HomeProps {
 
@@ -18,6 +19,12 @@ export const Home: React.FC<HomeProps> = ({ }) => {
     const [searchResults, setSearchResults] = useState<Movie[]>([]);
     const [nominations, setNominations] = useState<Movie[]>([]);
     const [showResults, setShowResults] = useState(true);
+    const [showSnackbar, setShowSnackbar] = useState(false);
+
+    useEffect(() => {
+        nominations.length == 5 ? setShowSnackbar(true) : setShowSnackbar(false)
+
+    }, [nominations]);
 
     const addNomination = (movie: Movie) => {
         setNominations([...nominations, movie])
@@ -31,9 +38,10 @@ export const Home: React.FC<HomeProps> = ({ }) => {
     }
 
     return (
+
         <Box display="flex" flexDirection="column" padding={5}>
+            <CustomSnackbar isOpen={showSnackbar} />
             <Box flex="1" flexShrink={0} justifyContent="center" alignItems="center" display="flex" flexDirection="column">
-                <Icon />
                 <Typography variant="h3">The Shoppies</Typography>
                 <SearchBar setSearchResults={setSearchResults} />
             </Box>
