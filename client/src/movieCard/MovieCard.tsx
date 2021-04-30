@@ -18,21 +18,22 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-export const MovieCard: React.FC<MovieCardProps> = ({ movie, addNomination, isResults, isNominated, removeNomination}: MovieCardProps) => {
+export const MovieCard: React.FC<MovieCardProps> = ({ movie, addNomination, isResults, isNominated, removeNomination }: MovieCardProps) => {
     const classes = useStyles();
 
     return (
         <Card className={classes.root}>
-            <CardActionArea>
+            <CardActionArea >
                 <CardMedia
                     component="img"
                     alt={movie.Title}
                     image={movie.Poster}
-                    height="200px"
                     title={movie.Title}
+                    height="200px"
+                    style={{ objectFit: "cover" }}
                 />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                <CardContent style={{ minHeight: "125px" }}>
+                    <Typography gutterBottom variant="body1">
                         {movie.Title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
@@ -40,8 +41,8 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, addNomination, isRe
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions>
-                <Button disabled={isResults && isNominated(movie) ? true : false} size="small" color="primary" onClick={() => isResults?addNomination(movie):removeNomination(movie)}>
+            <CardActions >
+                <Button disabled={isResults && isNominated(movie) ? true : false} size="small" color="primary" onClick={() => isResults ? addNomination(movie) : removeNomination(movie)}>
                     {isResults ? "Nominate" : "Remove"}
                 </Button>
             </CardActions>

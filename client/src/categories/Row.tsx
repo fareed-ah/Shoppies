@@ -31,9 +31,9 @@ export const Row: React.FC<RowProps> = ({ movieData, addNomination, isShowingRes
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Grid container spacing={1} alignItems="stretch">
+            <Grid container spacing={1}>
                 {movieData.map((movie) => (
-                    <Grid item key={movie.imdbID} xs={2}>
+                    <Grid item key={movie.imdbID} sm={12} md={6} lg={3} xl={1}>
                         <MovieCard removeNomination={removeNomination} isNominated={isNominated} isResults={isShowingResults} movie={movie} addNomination={addNomination} />
                     </Grid>
                 ))}
