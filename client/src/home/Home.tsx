@@ -1,4 +1,4 @@
-import { Box, Button, Card, Icon, Typography } from '@material-ui/core';
+import { Box, Button, Icon, Typography } from '@material-ui/core';
 import React, { useState } from 'react'
 import { Row } from '../categories/Row';
 import { SearchBar } from '../searchbar/SearchBar';
@@ -38,8 +38,8 @@ export const Home: React.FC<HomeProps> = ({ }) => {
                 <SearchBar setSearchResults={setSearchResults} />
             </Box>
             <Box flex="3">
-                <Button variant="contained" onClick={() => setShowResults(true)}>Search Results</Button>
-                <Button variant="contained" onClick={() => setShowResults(false)}>Nominations</Button>
+                <Button variant={showResults?"contained":"text"} onClick={() => setShowResults(true)}>Search Results</Button>
+                <Button variant={!showResults ? "contained" : "text"} onClick={() => setShowResults(false)}>Nominations</Button>
                 <Row isNominated={isNominated} removeNomination={removeNomination} isShowingResults={showResults} movieData={showResults ? searchResults : nominations} addNomination={addNomination}></Row>
             </Box>
         </Box>
