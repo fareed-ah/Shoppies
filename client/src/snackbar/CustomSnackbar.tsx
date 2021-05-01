@@ -1,5 +1,4 @@
-import { IconButton, Snackbar } from '@material-ui/core';
-import { Clear } from '@material-ui/icons';
+import { Snackbar } from '@material-ui/core';
 import React, { useEffect } from 'react'
 import { SnackbarMessage } from '../types';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
@@ -23,12 +22,12 @@ export const CustomSnackbar: React.FC<SnackbarProps> = ({ message, setSnackbarMe
         setOpen(message != undefined)
     }, [message]);
 
-    const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+    const handleClose = (_event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
         setOpen(false)
-        
+
     };
 
     return (
@@ -38,7 +37,7 @@ export const CustomSnackbar: React.FC<SnackbarProps> = ({ message, setSnackbarMe
                 horizontal: 'right',
             }}
             open={open}
-            onExited={()=>setSnackbarMessage(undefined)}
+            onExited={() => setSnackbarMessage(undefined)}
             autoHideDuration={6000}
             onClose={handleClose}>
             <Alert onClose={handleClose} severity={message ? message.severity : undefined}>
