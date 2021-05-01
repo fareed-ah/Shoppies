@@ -4,11 +4,11 @@ import { Movie } from '../home/Home';
 
 interface MovieCardProps {
     movie: Movie,
-    addNomination: (movie: Movie) => void
-    removeNomination: (movie: Movie) => void
-    isResults: boolean
-    isNominated: (movie: Movie) => boolean
+    handleNomination: (movie: Movie) => void,
+    canNominate: (movie: Movie) => boolean,
+    isResults: boolean,
 }
+
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-export const MovieCard: React.FC<MovieCardProps> = ({ movie, addNomination, isResults, isNominated, removeNomination }: MovieCardProps) => {
+export const MovieCard: React.FC<MovieCardProps> = ({ movie, isResults, canNominate, handleNomination }: MovieCardProps) => {
     const classes = useStyles();
 
     return (
@@ -32,7 +32,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, addNomination, isRe
                     height="200px"
                     style={{ objectFit: "cover" }}
                 />
-                <CardContent style={{ minHeight: "110px" }}>
+                <CardContent style={{ minHeight: "130px" }}>
                     <Typography gutterBottom variant="body1">
                         {movie.Title}
                     </Typography>
@@ -43,7 +43,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, addNomination, isRe
             </CardActionArea>
             <Divider orientation="horizontal" />
             <CardActions >
-                <Button disabled={isResults && isNominated(movie) ? true : false} size="small" color="primary" onClick={() => isResults ? addNomination(movie) : removeNomination(movie)}>
+                <Button disabled={canNominate(movie)} size="small" color="primary" onClick={() => handleNomination(movie)}>
                     {isResults ? "Nominate" : "Remove"}
                 </Button>
             </CardActions>

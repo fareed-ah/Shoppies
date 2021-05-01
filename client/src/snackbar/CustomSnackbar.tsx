@@ -1,35 +1,20 @@
 import { IconButton, Snackbar } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
-import React, { useEffect } from 'react'
+import React from 'react'
 
 interface SnackbarProps {
-    isOpen: boolean,
+    handleClose: (event: React.SyntheticEvent | React.MouseEvent, reason?: string | undefined) => void
+    isOpen: boolean
 }
 
-export const CustomSnackbar: React.FC<SnackbarProps> = ({ isOpen }: SnackbarProps) => {
-    const [open, setOpen] = React.useState(isOpen);
-
-    useEffect(() => {
-        setOpen(isOpen)
-
-    }, [isOpen]);
-
-    const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpen(false);
-    };
-    
+export const CustomSnackbar: React.FC<SnackbarProps> = ({ handleClose, isOpen }: SnackbarProps) => {
     return (
-
         <Snackbar
             anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
             }}
-            open={open}
+            open={isOpen}
             autoHideDuration={6000}
             onClose={handleClose}
             message="You have nominated 5 movies!"
