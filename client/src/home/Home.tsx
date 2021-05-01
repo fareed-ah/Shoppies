@@ -4,17 +4,12 @@ import { Row } from '../categories/Row';
 import { SearchBar } from '../searchbar/SearchBar';
 import { CustomSnackbar } from '../snackbar/CustomSnackbar';
 import { CustomTabBar } from '../tabs/CustomTabBar';
+import { Movie } from '../types';
 
 interface HomeProps {
 
 }
 
-export type Movie = {
-    Title: string,
-    Year: string,
-    Poster: string,
-    imdbID: string,
-}
 
 export const Home: React.FC<HomeProps> = ({ }) => {
     const [searchResults, setSearchResults] = useState<Movie[]>([]);
@@ -41,7 +36,6 @@ export const Home: React.FC<HomeProps> = ({ }) => {
     const handleNomination = (movie: Movie) => {
         if (nominations.length == 5 && !isNominated(movie)) {
             setShowSnackbar(true)
-
         } else {
             showResults ? addNomination(movie) : removeNomination(movie)
         }
@@ -62,7 +56,7 @@ export const Home: React.FC<HomeProps> = ({ }) => {
     console.log(showSnackbar)
     return (
         <Box display="flex" flexDirection="column" padding={5}>
-            <CustomSnackbar isOpen={showSnackbar} handleClose={handleClose} />
+            <CustomSnackbar isOpen={true} handleClose={handleClose} />
             <Box flex="1" flexShrink={0} justifyContent="center" alignItems="center" display="flex" flexDirection="column">
                 <Typography variant="h3">The Shoppies</Typography>
                 <SearchBar setSearchResults={setSearchResults} />

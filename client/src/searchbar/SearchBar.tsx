@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Clear } from '@material-ui/icons';
 import axios from 'axios';
-import { Movie } from '../home/Home';
+import { Movie } from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,8 +34,6 @@ const useStyles = makeStyles((theme: Theme) =>
 interface SearchBarProps {
     setSearchResults: React.Dispatch<React.SetStateAction<Movie[]>>
 }
-
-
 
 export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults }: SearchBarProps) => {
     const classes = useStyles();
