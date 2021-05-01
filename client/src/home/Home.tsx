@@ -4,30 +4,29 @@ import { Row } from '../categories/Row';
 import { SearchBar } from '../searchbar/SearchBar';
 import { CustomSnackbar } from '../snackbar/CustomSnackbar';
 import { CustomTabBar } from '../tabs/CustomTabBar';
+import { MaxNominationsExceeded, MaxNominationsReached, Movie, SnackbarMessage } from '../types';
 
 interface HomeProps {
 
 }
 
-export type Movie = {
-    Title: string,
-    Year: string,
-    Poster: string,
-    imdbID: string,
-}
 
 export const Home: React.FC<HomeProps> = ({ }) => {
     const [searchResults, setSearchResults] = useState<Movie[]>([]);
     const [nominations, setNominations] = useState<Movie[]>([]);
     const [showResults, setShowResults] = useState(true);
-    const [showSnackbar, setShowSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState<SnackbarMessage | undefined>();
 
     useEffect(() => {
-        nominations.length == 5 ? setShowSnackbar(true) : setShowSnackbar(false)
+        nominations.length == 5 ? addSnackbar( MaxNominationsReached) : ({})
     }, [nominations]);
 
     const addNomination = (movie: Movie) => {
         setNominations([...nominations, movie])
+    }
+
+    const addSnackbar = (message: SnackbarMessage) => {
+        setSnackbarMessage(message)
     }
 
     const removeNomination = (movie: Movie) => {
@@ -40,8 +39,7 @@ export const Home: React.FC<HomeProps> = ({ }) => {
 
     const handleNomination = (movie: Movie) => {
         if (nominations.length == 5 && !isNominated(movie)) {
-            setShowSnackbar(true)
-
+            addSnackbar(MaxNominationsExceeded)
         } else {
             showResults ? addNomination(movie) : removeNomination(movie)
         }
@@ -51,21 +49,14 @@ export const Home: React.FC<HomeProps> = ({ }) => {
         return showResults && isNominated(movie)
     }
 
-    const handleClose = (_event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setShowSnackbar(false);
-    };
-
-    console.log(showSnackbar)
     return (
         <Box display="flex" flexDirection="column" padding={5}>
-            <CustomSnackbar isOpen={showSnackbar} handleClose={handleClose} />
+            < CustomSnackbar
+                    message={snackbarMessage}
+                    setSnackbarMessage={setSnackbarMessage} />
             <Box flex="1" flexShrink={0} justifyContent="center" alignItems="center" display="flex" flexDirection="column">
                 <Typography variant="h3">The Shoppies</Typography>
-                <SearchBar setSearchResults={setSearchResults} />
+                <SearchBar setSearchResults={setSearchResults} setSnackbarMessage={setSnackbarMessage} />
             </Box>
             <Box flex="3">
                 <Box style={{ paddingLeft: "25px", paddingBottom: "5px" }}>

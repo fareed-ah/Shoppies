@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Clear } from '@material-ui/icons';
 import axios from 'axios';
-import { Movie } from '../home/Home';
+import { Movie, SnackbarMessage } from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -33,11 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface SearchBarProps {
     setSearchResults: React.Dispatch<React.SetStateAction<Movie[]>>
+    setSnackbarMessage: React.Dispatch<React.SetStateAction<SnackbarMessage | undefined>>
 }
 
-
-
-export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults }: SearchBarProps) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnackbarMessage }: SearchBarProps) => {
     const classes = useStyles();
     const [title, setTitle] = useState('');
 
@@ -48,8 +47,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults }: Search
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-                const movies = res.data.Search;
-                setSearchResults(movies);
+                if (res.data.Response=="True") {
+                    const movies = res.data.Search;
+                    setSearchResults(movies);
+                } else {
+                    setSnackbarMessage({ message: res.data.Error, severity: "error" })
+                }
             })
     };
 

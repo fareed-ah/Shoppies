@@ -1,30 +1,48 @@
-import { IconButton, Snackbar } from '@material-ui/core';
-import { Clear } from '@material-ui/icons';
-import React from 'react'
+import { Snackbar } from '@material-ui/core';
+import React, { useEffect } from 'react'
+import { SnackbarMessage } from '../types';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
 interface SnackbarProps {
-    handleClose: (event: React.SyntheticEvent | React.MouseEvent, reason?: string | undefined) => void
-    isOpen: boolean
+    // handleClose: (event: React.SyntheticEvent | React.MouseEvent, reason?: string | undefined) => void
+    // isOpen: boolean
+    message: SnackbarMessage | undefined
+    setSnackbarMessage: React.Dispatch<React.SetStateAction<SnackbarMessage | undefined>>
 }
 
-export const CustomSnackbar: React.FC<SnackbarProps> = ({ handleClose, isOpen }: SnackbarProps) => {
+function Alert(props: AlertProps) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+export const CustomSnackbar: React.FC<SnackbarProps> = ({ message, setSnackbarMessage }) => {
+
+    const [open, setOpen] = React.useState(false);
+
+    useEffect(() => {
+        setOpen(message != undefined)
+    }, [message]);
+
+    const handleClose = (_event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false)
+
+    };
+
     return (
         <Snackbar
             anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
             }}
-            open={isOpen}
+            open={open}
+            onExited={() => setSnackbarMessage(undefined)}
             autoHideDuration={6000}
-            onClose={handleClose}
-            message="You have nominated 5 movies!"
-            action={
-                <React.Fragment>
-                    <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-                        <Clear fontSize="small" />
-                    </IconButton>
-                </React.Fragment>
-            }
-        />
+            onClose={handleClose}>
+            <Alert onClose={handleClose} severity={message ? message.severity : undefined}>
+                {message ? message.message : ""}
+            </Alert>
+        </Snackbar>
     );
 }

@@ -1,6 +1,6 @@
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, createStyles, Divider } from '@material-ui/core';
 import React from 'react'
-import { Movie } from '../home/Home';
+import { Movie } from '../types';
 
 interface MovieCardProps {
     movie: Movie,

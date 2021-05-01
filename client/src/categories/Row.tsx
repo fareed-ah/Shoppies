@@ -1,7 +1,7 @@
 import { makeStyles, Theme, createStyles, Grid } from '@material-ui/core';
 import React from 'react'
-import { Movie } from '../home/Home';
 import { MovieCard } from '../movieCard/MovieCard';
+import { Movie } from '../types';
 
 interface RowProps {
     movieData: Movie[],
