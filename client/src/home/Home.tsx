@@ -51,7 +51,7 @@ export const Home: React.FC<HomeProps> = ({ }) => {
         return showResults && isNominated(movie)
     }
 
-    const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+    const handleClose = (_event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }

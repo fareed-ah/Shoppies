@@ -8,7 +8,7 @@ interface CustomTabBarProps {
 export const CustomTabBar: React.FC<CustomTabBarProps> = ({ setShowResults }) => {
 
     const [value, setValue] = React.useState(0);
-    const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleTabChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
         setShowResults(newValue == 0 ? true : false)
     };
