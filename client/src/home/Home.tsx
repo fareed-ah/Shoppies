@@ -1,24 +1,39 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, createStyles, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import { Row } from '../categories/Row';
-import { SearchBar } from '../searchbar/SearchBar';
 import { CustomSnackbar } from '../snackbar/CustomSnackbar';
-import { CustomTabBar } from '../tabs/CustomTabBar';
 import { MaxNominationsExceeded, MaxNominationsReached, Movie, SnackbarMessage } from '../types';
+import { MainSection } from './MainSection';
+import { NominationsSection } from './NominationsSection';
 
 interface HomeProps {
 
 }
 
+const useStyles = makeStyles(() =>
+    createStyles({
+        root: {
+            width: "100%",
+            height: "100vh",
+            backgroundColor: "#020354",
+            color:"#FFF"
+        },
+
+        mainSection: {
+            flex: "1",
+        },
+        Section: {
+            flex: "1",
+        },
+    }),
+);
 
 export const Home: React.FC<HomeProps> = ({ }) => {
-    const [searchResults, setSearchResults] = useState<Movie[]>([]);
     const [nominations, setNominations] = useState<Movie[]>([]);
-    const [showResults, setShowResults] = useState(true);
     const [snackbarMessage, setSnackbarMessage] = useState<SnackbarMessage | undefined>();
+    const classes = useStyles();
 
     useEffect(() => {
-        nominations.length == 5 ? addSnackbar( MaxNominationsReached) : ({})
+        nominations.length == 5 ? addSnackbar(MaxNominationsReached) : ({})
     }, [nominations]);
 
     const addNomination = (movie: Movie) => {
@@ -38,32 +53,25 @@ export const Home: React.FC<HomeProps> = ({ }) => {
     }
 
     const handleNomination = (movie: Movie) => {
-        if (nominations.length == 5 && !isNominated(movie)) {
-            addSnackbar(MaxNominationsExceeded)
-        } else {
-            showResults ? addNomination(movie) : removeNomination(movie)
+        if (!isNominated(movie)) {
+            nominations.length == 5 ? addSnackbar(MaxNominationsExceeded) : addNomination(movie)
+        } else if (isNominated(movie)) {
+            removeNomination(movie)
         }
     }
 
     const canNominate = (movie: Movie) => {
-        return showResults && isNominated(movie)
+        return isNominated(movie)
     }
 
     return (
-        <Box display="flex" flexDirection="column" padding={5}>
+        <Box className={classes.root} display="flex" flexDirection="row">
             < CustomSnackbar
-                    message={snackbarMessage}
-                    setSnackbarMessage={setSnackbarMessage} />
-            <Box flex="1" flexShrink={0} justifyContent="center" alignItems="center" display="flex" flexDirection="column">
-                <Typography variant="h3">The Shoppies</Typography>
-                <SearchBar setSearchResults={setSearchResults} setSnackbarMessage={setSnackbarMessage} />
-            </Box>
-            <Box flex="3">
-                <Box style={{ paddingLeft: "25px", paddingBottom: "5px" }}>
-                    <CustomTabBar setShowResults={setShowResults} />
-                </Box>
-                <Row handleNomination={handleNomination} canNominate={canNominate} isShowingResults={showResults} movieData={showResults ? searchResults : nominations}></Row>
-            </Box>
+                message={snackbarMessage}
+                setSnackbarMessage={setSnackbarMessage} />
+            <MainSection setSnackbarMessage={setSnackbarMessage} handleNomination={handleNomination} canNominate={canNominate} />
+            <NominationsSection nominations={nominations} />
         </Box>
     );
+
 }

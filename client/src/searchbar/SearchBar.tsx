@@ -12,10 +12,11 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             padding: '2px 4px',
-            margin: '25px',
             display: 'flex',
             alignItems: 'center',
-            width: 400,
+            marginTop: "50px",
+            marginBottom: "50px",
+            maxWidth: "900px",
         },
         input: {
             marginLeft: theme.spacing(1),
@@ -34,9 +35,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface SearchBarProps {
     setSearchResults: React.Dispatch<React.SetStateAction<Movie[]>>
     setSnackbarMessage: React.Dispatch<React.SetStateAction<SnackbarMessage | undefined>>
+    setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnackbarMessage }: SearchBarProps) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnackbarMessage, setSearchQuery }: SearchBarProps) => {
     const classes = useStyles();
     const [title, setTitle] = useState('');
 
@@ -47,10 +49,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnack
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-                if (res.data.Response=="True") {
+                if (res.data.Response == "True") {
                     const movies = res.data.Search;
+                    setSearchQuery(title);
                     setSearchResults(movies);
                 } else {
+                    setSearchQuery('');
+                    setSearchResults([]);
                     setSnackbarMessage({ message: res.data.Error, severity: "error" })
                 }
             })
@@ -72,6 +77,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnack
             <IconButton type="reset" className={classes.iconButton}
                 onClick={() => {
                     setTitle('')
+                    setSearchQuery('');
                     setSearchResults([]);
                 }}>
                 <Clear />
