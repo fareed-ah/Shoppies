@@ -30,30 +30,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface SearchBarProps {
-    setSearchResults: React.Dispatch<React.SetStateAction<DetailedMovie[]>>
-    setSnackbarMessage: React.Dispatch<React.SetStateAction<SnackbarMessage | undefined>>
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnackbarMessage, setSearchQuery }: SearchBarProps) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ setSearchQuery }: SearchBarProps) => {
     const classes = useStyles();
     const [title, setTitle] = useState('');
 
     const handleSubmit = (evt: { preventDefault: () => void; }) => {
         evt.preventDefault();
-        axios.get(`https://www.omdbapi.com/?apikey=dd016357&s=${title}&type=movie`)
-
-            .then(res => {
-
-                if (res.data.Response == "True") {
-                    setSearchResults(res.data.Search);
-                    setSearchQuery(title);
-                } else {
-                    setSearchQuery('');
-                    setSearchResults([]);
-                    setSnackbarMessage({ message: res.data.Error, severity: "error" })
-                }
-            })
+        setSearchQuery(title);
     };
 
     return (
@@ -73,7 +59,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnack
                 onClick={() => {
                     setTitle('')
                     setSearchQuery('');
-                    setSearchResults([]);
                 }}>
                 <Clear />
             </IconButton>

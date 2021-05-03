@@ -37,7 +37,6 @@ const useStyles = makeStyles(() =>
 export const Home: React.FC<HomeProps> = ({ }) => {
     const [nominations, setNominations] = useState<DetailedMovie[]>([]);
     const [snackbarMessage, setSnackbarMessage] = useState<SnackbarMessage | undefined>();
-    const [searchResults, setSearchResults] = useState<DetailedMovie[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const classes = useStyles();
 
@@ -84,10 +83,10 @@ export const Home: React.FC<HomeProps> = ({ }) => {
                 <Grid container spacing={6} direction="row">
                     <Grid item xs={12}>
                         <MainSection />
-                        <SearchBar setSearchResults={setSearchResults} setSnackbarMessage={setSnackbarMessage} setSearchQuery={setSearchQuery} />
+                        <SearchBar setSearchQuery={setSearchQuery} />
                     </Grid>
                     <Grid item sm={12} md={6}>
-                        <ResultsGrid searchResults={searchResults} searchQuery={searchQuery} handleNomination={handleNomination} canNominate={canNominate} />
+                        <ResultsGrid setSnackbarMessage={setSnackbarMessage} searchQuery={searchQuery} handleNomination={handleNomination} canNominate={canNominate} />
                     </Grid>
                     <Grid item sm={12} md={6}>
                         <NominationsSection nominations={nominations} handleNomination={handleNomination} canNominate={canNominate} />

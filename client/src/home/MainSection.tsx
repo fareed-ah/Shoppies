@@ -27,7 +27,7 @@ export const MainSection: React.FC<MainSectionProps> = () => {
     return (
         <Box display="flex" flexDirection="column" marginBottom="50px" >
             <Typography className={classes.greenHeading}>The Shoppies</Typography>
-            <Typography className={classes.subheading}>Search for your favourite movies and nominate your <strong>Top 5</strong> that will compete to win this years <strong>Shoppy</strong> award.</Typography>
+            <Typography className={classes.subheading}>Search for your favourite movies and nominate your <strong>Top 5</strong> that you believe are worthy of earning the <strong>Shoppy</strong> award.</Typography>
         </Box>
     );
 }

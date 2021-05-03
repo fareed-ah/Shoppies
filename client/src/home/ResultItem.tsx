@@ -1,4 +1,4 @@
-import { makeStyles, createStyles, Paper, Typography, Theme, IconButton, Grid, CircularProgress } from '@material-ui/core';
+import { makeStyles, createStyles, Paper, Typography, IconButton, Grid, CircularProgress } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
@@ -11,7 +11,7 @@ interface ResultItemProps {
     canNominate: (movie: DetailedMovie) => boolean
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
 
         card: {
@@ -74,10 +74,10 @@ export const ResultItem: React.FC<ResultItemProps> = ({ nominated, movie, handle
                             <Typography gutterBottom variant="subtitle1">
                                 {detailedMovie.Title}
                             </Typography>
-                            <Typography variant="body2" gutterBottom>
+                            <Typography variant="body2" >
                                 {detailedMovie.Genre}
                             </Typography>
-                            <Typography variant="body2" gutterBottom>
+                            <Typography variant="body2" >
                                 {detailedMovie.Released}
                             </Typography>
                         </Grid>
