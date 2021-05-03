@@ -1,10 +1,12 @@
-import { Box, createStyles, Divider, makeStyles, Typography } from '@material-ui/core';
+import { Box, createStyles, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import { Movie } from '../types';
-import { NominationItem } from './NominationItem';
+import { DetailedMovie } from '../types';
+import { ResultItem } from './ResultItem';
 
 interface NominationsSectionProps {
-    nominations: Movie[]
+    nominations: DetailedMovie[]
+    handleNomination: (movie: DetailedMovie) => void
+    canNominate: (movie: DetailedMovie) => boolean
 }
 
 const useStyles = makeStyles(() =>
@@ -13,30 +15,26 @@ const useStyles = makeStyles(() =>
             flex: "1",
             display: "flex",
             flexDirection: "column",
-            paddingLeft: "50px",
-            paddingTop: "50px",
-            borderTopLeftRadius: "100px",
-            borderBottomLeftRadius: "100px",
             height: "100%",
             flexGrow: 1,
         },
 
         heading: {
-            fontSize: "64px",
+            fontSize: "18px",
             fontWeight: "bold",
+            marginBottom: 8,
         },
     }),
 );
 
-export const NominationsSection: React.FC<NominationsSectionProps> = ({ nominations }: NominationsSectionProps) => {
+export const NominationsSection: React.FC<NominationsSectionProps> = ({ nominations, handleNomination, canNominate }: NominationsSectionProps) => {
     const classes = useStyles();
     return (
         <Box className={classes.root} >
-            <Typography className={classes.heading}>Nominations</Typography>
-            <Divider />
+            <Typography className={classes.heading}> {nominations.length == 0 ? "You have no nominations" : "Your nominations"}</Typography>
             <Box display="flex" flexDirection="column" flexGrow={1}>
-                {nominations.map((movie, index) => (
-                    <NominationItem movie={movie} rank={index + 1} />
+                {nominations.map((movie) => (
+                    <ResultItem key={movie.imdbID} nominated={true} movie={movie} handleNomination={handleNomination} canNominate={canNominate} />
                 ))}
             </Box>
         </Box >

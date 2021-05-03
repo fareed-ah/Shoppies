@@ -1,49 +1,38 @@
-import classes from '*.module.css';
-import { createStyles, Grid, makeStyles, Paper, Box, Typography } from '@material-ui/core';
-import React, { useState } from 'react'
-import { SearchBar } from '../searchbar/SearchBar';
-import { Movie, SnackbarMessage } from '../types';
+import { createStyles, makeStyles, Box, Typography } from '@material-ui/core';
+import React from 'react'
+import { DetailedMovie } from '../types';
 import { ResultItem } from './ResultItem';
 
 interface ResultsGridProps {
-    setSnackbarMessage: React.Dispatch<React.SetStateAction<SnackbarMessage | undefined>>
-    handleNomination: (movie: Movie) => void
-    canNominate: (movie: Movie) => boolean
+    handleNomination: (movie: DetailedMovie) => void
+    canNominate: (movie: DetailedMovie) => boolean
+    searchResults: DetailedMovie[],
+    searchQuery: string,
 }
 
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
         },
         body: {
             fontSize: "18px",
-            fontWeight: "normal",
-            color: "#000000",
+            fontWeight: "bold",
+            marginBottom: 8,
         },
     }),
 );
 
-export const ResultsGrid: React.FC<ResultsGridProps> = ({ setSnackbarMessage, handleNomination, canNominate }: ResultsGridProps) => {
-    const [searchResults, setSearchResults] = useState<Movie[]>([]);
-    const [searchQuery, setSearchQuery] = useState('');
+export const ResultsGrid: React.FC<ResultsGridProps> = ({ searchResults, searchQuery, handleNomination, canNominate }: ResultsGridProps) => {
 
     const classes = useStyles();
     return (
-        <Grid container className={classes.root} spacing={1}>
-            <Grid item xs={12}>
-                <SearchBar setSearchResults={setSearchResults} setSnackbarMessage={setSnackbarMessage} setSearchQuery={setSearchQuery} />
-            </Grid>
-            <Grid hidden={searchQuery == ''} item xs={12}>
-                <Typography className={classes.body}>{`Reuslts for "${searchQuery}"`}</Typography>
-            </Grid>
-
+        <Box className={classes.root}>
+            <Typography className={classes.body}>{`Search results ${searchQuery != "" ? ("for \"" + searchQuery) + "\"" : ""}`}</Typography>
             {searchResults.map((movie) => (
-                <Grid key={movie.imdbID} item>
-                    <ResultItem movie={movie} handleNomination={handleNomination} canNominate={canNominate} />
-                </Grid>
+                <ResultItem key={movie.imdbID} nominated={false} movie={movie} handleNomination={handleNomination} canNominate={canNominate} />
             ))}
-        </Grid>
-    );
+        </Box>
+    )
 }

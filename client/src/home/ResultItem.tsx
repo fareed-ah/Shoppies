@@ -1,77 +1,89 @@
-import { makeStyles, createStyles, Paper, Box, Typography, Zoom, Button, Theme } from '@material-ui/core';
-import { Image } from '@material-ui/icons';
-import React, { useState } from 'react'
-import { Movie } from '../types';
+import { makeStyles, createStyles, Paper, Typography, Theme, IconButton, Grid, CircularProgress } from '@material-ui/core';
+import { Add, Remove } from '@material-ui/icons';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { DetailedMovie, EmptyMovie } from '../types';
 
 interface ResultItemProps {
-    movie: Movie
-    handleNomination: (movie: Movie) => void
-    canNominate: (movie: Movie) => boolean
+    nominated: boolean
+    movie: DetailedMovie
+    handleNomination: (movie: DetailedMovie) => void
+    canNominate: (movie: DetailedMovie) => boolean
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
 
-        root: {
-            backgroundColor: 'transparent',
-            [theme.breakpoints.up('sm')]: {
-                height: 175,
-                width: 130,
-            },
-            [theme.breakpoints.up('md')]: {
-                height: 175 * 1.25,
-                width: 130 * 1.5,
-            },
-            [theme.breakpoints.up('lg')]: {
-                height: 175 * 1.5,
-                width: 130 * 1.5,
-            },
-
+        card: {
             display: "flex",
             flexDirection: "row",
-            "&:hover": {
-                transform: "scale3d(1, 1.1, 1) translate(-75px,0px)",
-                "& $text": {
-                    display: "block",
-                },
-                "& $image": {
-                    borderBottomRightRadius: "0px",
-                    borderTopRightRadius: "0px",
-                }
-            },
+            alignItems: "center",
+            backgroundColor: "#F2F5F7",
+            margin: 6,
+            borderColor: "#000",
+            border: 1,
         },
-        image: {
-            borderRadius: "8px",
-            width: "100%",
-            backgroundColor: 'transparent',
+        poster: {
+            height: 100,
+            width: 75,
+            borderRadius: 8,
         },
-
-        text: {
-            borderBottomRightRadius: "8px",
-            borderTopRightRadius: "8px",
-            zIndex: 1,
-            display: "none",
-            background: "#181818",
-            color: "#fff",
-            width: "100%",
-            minWidth: 150,
-            height: "100%",
-            padding: 8,
-            transition: "opacity 300ms ease-out, border-radius 200ms ease-out",
-        },
+        actionButton: {
+            color: "#FFF",
+            margin: 8,
+            height: 35,
+            width: 35,
+            backgroundColor: "#33BB87",
+        }
     }),
 );
 
-export const ResultItem: React.FC<ResultItemProps> = ({ movie, handleNomination, canNominate }: ResultItemProps) => {
+export const ResultItem: React.FC<ResultItemProps> = ({ nominated, movie, handleNomination, canNominate }: ResultItemProps) => {
     const classes = useStyles();
+    const [detailedMovie, setDetailedMovie] = useState<DetailedMovie>(EmptyMovie);
+
+    useEffect(() => {
+
+        axios.get<DetailedMovie>(`https://www.omdbapi.com/?apikey=dd016357&i=${movie.imdbID}`)
+            .then(res => {
+                setDetailedMovie(res.data)
+            })
+    }, [movie]);
+
+
+    if (detailedMovie == EmptyMovie) {
+        return (
+            <CircularProgress />
+        )
+    }
 
     return (
-        <Paper className={classes.root}>
-            <img className={classes.image} src={movie.Poster == "N/A" ? "/images/posterAlt.png" : movie.Poster}></img>
-            <Box className={classes.text}>
-                <Typography>{movie.Title}</Typography>
-                <Button disabled={canNominate(movie)} onClick={() => handleNomination(movie)}>NOMINATE</Button>
-            </Box>
+        <Paper className={classes.card} elevation={0}>
+            <Grid container spacing={2} alignItems="center">
+                <Grid item>
+                    < IconButton onClick={() => handleNomination(movie)} className={classes.actionButton} disabled={!nominated && canNominate(movie)} component="span" >
+                        {nominated ? <Remove /> : <Add />}
+                    </IconButton >
+                </Grid>
+                <Grid item>
+                    <img className={classes.poster} src={detailedMovie.Poster == "N/A" ? "/images/posterAlt.png" : detailedMovie.Poster}></img>
+                </Grid>
+                <Grid item xs={12} sm container>
+                    <Grid item xs container direction="column" spacing={2}>
+                        <Grid item xs>
+                            <Typography gutterBottom variant="subtitle1">
+                                {detailedMovie.Title}
+                            </Typography>
+                            <Typography variant="body2" gutterBottom>
+                                {detailedMovie.Genre}
+                            </Typography>
+                            <Typography variant="body2" gutterBottom>
+                                {detailedMovie.Released}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Paper >
     );
 }

@@ -1,9 +1,11 @@
-import { Box, createStyles, makeStyles } from '@material-ui/core';
+import { Box, Container, createStyles, Grid, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
+import { SearchBar } from '../searchbar/SearchBar';
 import { CustomSnackbar } from '../snackbar/CustomSnackbar';
-import { MaxNominationsExceeded, MaxNominationsReached, Movie, SnackbarMessage } from '../types';
+import { MaxNominationsExceeded, MaxNominationsReached, DetailedMovie, SnackbarMessage } from '../types';
 import { MainSection } from './MainSection';
 import { NominationsSection } from './NominationsSection';
+import { ResultsGrid } from './ResultsGrid';
 
 interface HomeProps {
 
@@ -13,9 +15,14 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             width: "100%",
-            height: "100vh",
-            backgroundColor: "#020354",
-            color:"#FFF"
+            height: "100%",
+            minHeight: "100vh",
+            backgroundColor: "#F2F5F7",
+            color: "#000",
+            flexGrow: 1,
+            padding: "100px",
+            display: "flex",
+            flexDirection: "row"
         },
 
         mainSection: {
@@ -28,15 +35,17 @@ const useStyles = makeStyles(() =>
 );
 
 export const Home: React.FC<HomeProps> = ({ }) => {
-    const [nominations, setNominations] = useState<Movie[]>([]);
+    const [nominations, setNominations] = useState<DetailedMovie[]>([]);
     const [snackbarMessage, setSnackbarMessage] = useState<SnackbarMessage | undefined>();
+    const [searchResults, setSearchResults] = useState<DetailedMovie[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const classes = useStyles();
 
     useEffect(() => {
         nominations.length == 5 ? addSnackbar(MaxNominationsReached) : ({})
     }, [nominations]);
 
-    const addNomination = (movie: Movie) => {
+    const addNomination = (movie: DetailedMovie) => {
         setNominations([...nominations, movie])
     }
 
@@ -44,15 +53,15 @@ export const Home: React.FC<HomeProps> = ({ }) => {
         setSnackbarMessage(message)
     }
 
-    const removeNomination = (movie: Movie) => {
+    const removeNomination = (movie: DetailedMovie) => {
         setNominations(nominations.filter(nominatedMovie => nominatedMovie.imdbID != movie.imdbID))
     }
 
-    const isNominated = (movie: Movie): boolean => {
+    const isNominated = (movie: DetailedMovie): boolean => {
         return nominations.some(nominatedMovie => nominatedMovie.imdbID === movie.imdbID)
     }
 
-    const handleNomination = (movie: Movie) => {
+    const handleNomination = (movie: DetailedMovie) => {
         if (!isNominated(movie)) {
             nominations.length == 5 ? addSnackbar(MaxNominationsExceeded) : addNomination(movie)
         } else if (isNominated(movie)) {
@@ -60,17 +69,31 @@ export const Home: React.FC<HomeProps> = ({ }) => {
         }
     }
 
-    const canNominate = (movie: Movie) => {
+    const canNominate = (movie: DetailedMovie) => {
         return isNominated(movie)
     }
 
+
     return (
-        <Box className={classes.root} display="flex" flexDirection="row">
-            < CustomSnackbar
-                message={snackbarMessage}
-                setSnackbarMessage={setSnackbarMessage} />
-            <MainSection setSnackbarMessage={setSnackbarMessage} handleNomination={handleNomination} canNominate={canNominate} />
-            <NominationsSection nominations={nominations} />
+        <Box className={classes.root} >
+            <Container>
+                < CustomSnackbar
+                    message={snackbarMessage}
+                    setSnackbarMessage={setSnackbarMessage} />
+
+                <Grid container spacing={6} direction="row">
+                    <Grid item xs={12}>
+                        <MainSection />
+                        <SearchBar setSearchResults={setSearchResults} setSnackbarMessage={setSnackbarMessage} setSearchQuery={setSearchQuery} />
+                    </Grid>
+                    <Grid item sm={12} md={6}>
+                        <ResultsGrid searchResults={searchResults} searchQuery={searchQuery} handleNomination={handleNomination} canNominate={canNominate} />
+                    </Grid>
+                    <Grid item sm={12} md={6}>
+                        <NominationsSection nominations={nominations} handleNomination={handleNomination} canNominate={canNominate} />
+                    </Grid>
+                </Grid>
+            </Container>
         </Box>
     );
 

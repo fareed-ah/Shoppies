@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Clear } from '@material-ui/icons';
 import axios from 'axios';
-import { Movie, SnackbarMessage } from '../types';
+import { DetailedMovie, SnackbarMessage } from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: '2px 4px',
             display: 'flex',
             alignItems: 'center',
-            marginTop: "50px",
-            marginBottom: "50px",
-            maxWidth: "900px",
         },
         input: {
             marginLeft: theme.spacing(1),
@@ -33,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface SearchBarProps {
-    setSearchResults: React.Dispatch<React.SetStateAction<Movie[]>>
+    setSearchResults: React.Dispatch<React.SetStateAction<DetailedMovie[]>>
     setSnackbarMessage: React.Dispatch<React.SetStateAction<SnackbarMessage | undefined>>
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }
@@ -44,15 +41,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnack
 
     const handleSubmit = (evt: { preventDefault: () => void; }) => {
         evt.preventDefault();
-        axios.post(`https://www.omdbapi.com/?apikey=dd016357&s=${title}`)
+        axios.get(`https://www.omdbapi.com/?apikey=dd016357&s=${title}&type=movie`)
 
             .then(res => {
-                console.log(res);
-                console.log(res.data);
+
                 if (res.data.Response == "True") {
-                    const movies = res.data.Search;
+                    setSearchResults(res.data.Search);
                     setSearchQuery(title);
-                    setSearchResults(movies);
                 } else {
                     setSearchQuery('');
                     setSearchResults([]);
