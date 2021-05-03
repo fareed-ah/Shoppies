@@ -5,8 +5,6 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Clear } from '@material-ui/icons';
-import axios from 'axios';
-import { DetailedMovie, SnackbarMessage } from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
