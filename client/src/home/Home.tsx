@@ -1,5 +1,5 @@
 import { Box, Container, createStyles, Grid, makeStyles } from '@material-ui/core';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SearchBar } from '../searchbar/SearchBar';
 import { DetailedMovie } from '../types';
 import { MainSection } from './MainSection';
@@ -37,6 +37,23 @@ export const Home: React.FC<HomeProps> = ({ }) => {
     const [nominations, setNominations] = useState<DetailedMovie[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const classes = useStyles();
+
+    useEffect(() => {
+        setNominations(getNominations());
+    },[]);
+
+    useEffect(() => {
+        saveNominations()
+    }, [nominations]);
+
+    const saveNominations = () => {
+        localStorage.setItem('nominations', JSON.stringify(nominations));
+    }
+
+    const getNominations = (): DetailedMovie[] => {
+        const jsonString = localStorage.getItem("nominations")
+        return (jsonString) ? JSON.parse(jsonString) : [];
+    }
 
     const addNomination = (movie: DetailedMovie) => {
         setNominations([...nominations, movie])
