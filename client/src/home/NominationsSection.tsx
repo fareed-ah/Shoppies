@@ -1,4 +1,5 @@
 import { Box, createStyles, makeStyles, Typography } from '@material-ui/core';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import React from 'react';
 import { DetailedMovie } from '../types';
 import { ResultItem } from './ResultItem';
@@ -7,6 +8,10 @@ interface NominationsSectionProps {
     nominations: DetailedMovie[]
     handleNomination: (movie: DetailedMovie) => void
     canNominate: (movie: DetailedMovie) => boolean
+}
+
+function Alert(props: AlertProps) {
+    return <MuiAlert elevation={2} variant="filled" {...props} />;
 }
 
 const useStyles = makeStyles(() =>
@@ -36,6 +41,11 @@ export const NominationsSection: React.FC<NominationsSectionProps> = ({ nominati
                 {nominations.map((movie) => (
                     <ResultItem key={movie.imdbID} nominated={true} movie={movie} handleNomination={handleNomination} canNominate={canNominate} />
                 ))}
+                {nominations.length == 5 &&
+                    <Alert style={{ maxWidth: "100" }} severity="success">
+                        You have nominated 5 movies!
+                    </Alert>
+                }
             </Box>
         </Box >
     );

@@ -46,8 +46,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchQuery }: SearchBa
                 <SearchIcon />
             </IconButton>
             <InputBase
-                onChange={(e) =>
+                onChange={(e) => {
                     setTitle(e.currentTarget.value)
+                    setSearchQuery(e.currentTarget.value);
+                }
                 }
                 value={title}
                 className={classes.input}
