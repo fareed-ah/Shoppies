@@ -32,8 +32,15 @@ const useStyles = makeStyles(() =>
             margin: 8,
             height: 35,
             width: 35,
+
+        },
+        nominateButton: {
             backgroundColor: "#33BB87",
+        },
+        removeButton: {
+            backgroundColor: "#D8473D",
         }
+
     }),
 );
 
@@ -46,7 +53,7 @@ export const ResultItem: React.FC<ResultItemProps> = ({ nominated, movie, handle
         <Paper className={classes.card} elevation={0}>
             <Grid container spacing={2} alignItems="center">
                 <Grid item>
-                    < IconButton onClick={() => handleNomination(movie)} className={classes.actionButton} disabled={!nominated && !canNominate(movie)} component="span" >
+                    < IconButton onClick={() => handleNomination(movie)} className={classes.actionButton + " " + (nominated ? classes.removeButton : classes.nominateButton)} disabled={!nominated && !canNominate(movie)} component="span" >
                         {nominated ? <Remove /> : <Add />}
                     </IconButton >
                 </Grid>
