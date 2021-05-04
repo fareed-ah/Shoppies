@@ -1,69 +1,85 @@
-import { Box, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
-import { Row } from '../categories/Row';
+import { Box, Container, createStyles, Grid, makeStyles } from '@material-ui/core';
+import React, { useState } from 'react'
 import { SearchBar } from '../searchbar/SearchBar';
-import { CustomSnackbar } from '../snackbar/CustomSnackbar';
-import { CustomTabBar } from '../tabs/CustomTabBar';
-import { MaxNominationsExceeded, MaxNominationsReached, Movie, SnackbarMessage } from '../types';
+import { DetailedMovie } from '../types';
+import { MainSection } from './MainSection';
+import { NominationsSection } from './NominationsSection';
+import { ResultsGrid } from './ResultsGrid';
 
 interface HomeProps {
 
 }
 
+const useStyles = makeStyles(() =>
+    createStyles({
+        root: {
+            width: "100%",
+            height: "100%",
+            minHeight: "100vh",
+            backgroundColor: "#F2F5F7",
+            color: "#000",
+            flexGrow: 1,
+            padding: "50px",
+            display: "flex",
+            flexDirection: "row"
+        },
+
+        mainSection: {
+            flex: "1",
+        },
+        Section: {
+            flex: "1",
+        },
+    }),
+);
 
 export const Home: React.FC<HomeProps> = ({ }) => {
-    const [searchResults, setSearchResults] = useState<Movie[]>([]);
-    const [nominations, setNominations] = useState<Movie[]>([]);
-    const [showResults, setShowResults] = useState(true);
-    const [snackbarMessage, setSnackbarMessage] = useState<SnackbarMessage | undefined>();
+    const [nominations, setNominations] = useState<DetailedMovie[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const classes = useStyles();
 
-    useEffect(() => {
-        nominations.length == 5 ? addSnackbar( MaxNominationsReached) : ({})
-    }, [nominations]);
-
-    const addNomination = (movie: Movie) => {
+    const addNomination = (movie: DetailedMovie) => {
         setNominations([...nominations, movie])
     }
 
-    const addSnackbar = (message: SnackbarMessage) => {
-        setSnackbarMessage(message)
-    }
-
-    const removeNomination = (movie: Movie) => {
+    const removeNomination = (movie: DetailedMovie) => {
         setNominations(nominations.filter(nominatedMovie => nominatedMovie.imdbID != movie.imdbID))
     }
 
-    const isNominated = (movie: Movie): boolean => {
+    const isNominated = (movie: DetailedMovie): boolean => {
         return nominations.some(nominatedMovie => nominatedMovie.imdbID === movie.imdbID)
     }
 
-    const handleNomination = (movie: Movie) => {
-        if (nominations.length == 5 && !isNominated(movie)) {
-            addSnackbar(MaxNominationsExceeded)
-        } else {
-            showResults ? addNomination(movie) : removeNomination(movie)
+    const handleNomination = (movie: DetailedMovie) => {
+        if (!isNominated(movie)) {
+            addNomination(movie)
+        } else if (isNominated(movie)) {
+            removeNomination(movie)
         }
     }
 
-    const canNominate = (movie: Movie) => {
-        return showResults && isNominated(movie)
+    const canNominate = (movie: DetailedMovie) => {
+        return nominations.length < 5 && !isNominated(movie)
     }
 
     return (
-        <Box display="flex" flexDirection="column" padding={5}>
-            < CustomSnackbar
-                    message={snackbarMessage}
-                    setSnackbarMessage={setSnackbarMessage} />
-            <Box flex="1" flexShrink={0} justifyContent="center" alignItems="center" display="flex" flexDirection="column">
-                <Typography variant="h3">The Shoppies</Typography>
-                <SearchBar setSearchResults={setSearchResults} setSnackbarMessage={setSnackbarMessage} />
-            </Box>
-            <Box flex="3">
-                <Box style={{ paddingLeft: "25px", paddingBottom: "5px" }}>
-                    <CustomTabBar setShowResults={setShowResults} />
-                </Box>
-                <Row handleNomination={handleNomination} canNominate={canNominate} isShowingResults={showResults} movieData={showResults ? searchResults : nominations}></Row>
-            </Box>
+        <Box className={classes.root} >
+            <Container>
+
+                <Grid container spacing={6} direction="row">
+                    <Grid item xs={12}>
+                        <MainSection />
+                        <SearchBar setSearchQuery={setSearchQuery} />
+                    </Grid>
+                    <Grid item sm={12} md={6}>
+                        <ResultsGrid searchQuery={searchQuery} handleNomination={handleNomination} canNominate={canNominate} />
+                    </Grid>
+                    <Grid item sm={12} md={6}>
+                        <NominationsSection nominations={nominations} handleNomination={handleNomination} canNominate={canNominate} />
+                    </Grid>
+                </Grid>
+            </Container>
         </Box>
     );
+
 }

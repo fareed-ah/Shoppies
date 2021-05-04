@@ -5,17 +5,13 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Clear } from '@material-ui/icons';
-import axios from 'axios';
-import { Movie, SnackbarMessage } from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             padding: '2px 4px',
-            margin: '25px',
             display: 'flex',
             alignItems: 'center',
-            width: 400,
         },
         input: {
             marginLeft: theme.spacing(1),
@@ -32,28 +28,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface SearchBarProps {
-    setSearchResults: React.Dispatch<React.SetStateAction<Movie[]>>
-    setSnackbarMessage: React.Dispatch<React.SetStateAction<SnackbarMessage | undefined>>
+    setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnackbarMessage }: SearchBarProps) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ setSearchQuery }: SearchBarProps) => {
     const classes = useStyles();
     const [title, setTitle] = useState('');
 
     const handleSubmit = (evt: { preventDefault: () => void; }) => {
         evt.preventDefault();
-        axios.post(`https://www.omdbapi.com/?apikey=dd016357&s=${title}`)
-
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                if (res.data.Response=="True") {
-                    const movies = res.data.Search;
-                    setSearchResults(movies);
-                } else {
-                    setSnackbarMessage({ message: res.data.Error, severity: "error" })
-                }
-            })
+        setSearchQuery(title);
     };
 
     return (
@@ -62,8 +46,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnack
                 <SearchIcon />
             </IconButton>
             <InputBase
-                onChange={(e) =>
+                onChange={(e) => {
                     setTitle(e.currentTarget.value)
+                    setSearchQuery(e.currentTarget.value);
+                }
                 }
                 value={title}
                 className={classes.input}
@@ -72,7 +58,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setSearchResults, setSnack
             <IconButton type="reset" className={classes.iconButton}
                 onClick={() => {
                     setTitle('')
-                    setSearchResults([]);
+                    setSearchQuery('');
                 }}>
                 <Clear />
             </IconButton>
