@@ -60,9 +60,6 @@ export const ResultItem: React.FC<ResultItemProps> = ({ nominated, movie, handle
         setOpen(false);
     };
 
-    if (movie.imdbID == "tt2283336") {
-        console.log(movie)
-    }
     return (
         <Paper className={classes.card} elevation={0}>
             <Grid container spacing={2} alignItems="center">
@@ -77,7 +74,7 @@ export const ResultItem: React.FC<ResultItemProps> = ({ nominated, movie, handle
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" alignItems="center" spacing={2}>
+                    <Grid item xs container direction="column" spacing={2}>
                         <Grid item xs>
                             <Typography variant="subtitle1">
                                 {movie.Title}
