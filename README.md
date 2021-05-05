@@ -26,6 +26,3 @@ Deciding how to chain axios requests
 Website redesgins
 
 
-
-
-![image](https://user-images.githubusercontent.com/30379238/117090767-3b96cb00-ad27-11eb-923f-a4d281d9e816.png)
