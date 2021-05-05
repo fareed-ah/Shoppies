@@ -3,6 +3,26 @@ Welcome to The Shoppies, a movie award show for entrepreneurs!
 
 Visit The Shoppies webpage [here](https://shoppies-six.vercel.app/) to search for your favourite movies and nominate your Top 5 picks that you believe deserve to win a Shoppy award!
 
+## Installing and running in local dev environment 
+Open a terminal and run the following commands:
+
+```sh
+git clone git@github.com:fareed-ah/Shoppies.git
+```
+```sh
+cd Shoppies/client
+```
+```sh
+yarn install
+```
+
+```sh
+yarn dev
+```
+
+Noow yoou should be able to. view the page at localhost:3000
+
+
 ## Features
 -	Search for your favourite movies with ease, the new and improved search bar shows results as you type. Clear the search bar with the click of a button.
 -	Search results are displayed with pagination and the user is informed how many results are retrieved.
