@@ -14,10 +14,10 @@ o	Clear the search bar with the click of a button.
 ## Built Using
 
 The Shoppies webpage is built using the following libraries:
--	Nextjs – Front end framework (https://nextjs.org/)
--	Verecel – Web hosting (https://vercel.com/home?utm_source=next-site&utm_medium=banner&utm_campaign=next-website)
--	OMDBApi – External API used to fetch movies (http://omdbapi.com/)
--	Material UI – React UI Components (https://material-ui.com/)
+-	[Nextjs](https://nextjs.org/) – Front end framework 
+-	[Verecel](https://vercel.com/home?utm_source=next-site&utm_medium=banner&utm_campaign=next-website) – Web hosting 
+-	[OMDBApi](http://omdbapi.com/) – External API used to fetch movies 
+-	[Material UI](https://material-ui.com/) – React UI Components 
 
 ## Hurdles during development
 Duplicate movies
