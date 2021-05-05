@@ -3,7 +3,7 @@ Welcome to The Shoppies, a movie award show for entrepreneurs!
 
 Visit The Shoppies webpage [here](https://shoppies-six.vercel.app/) to search for your favourite movies and nominate your Top 5 picks that you believe deserve to win a Shoppy award!
 
-## Installing and running in local dev environment 
+## Installation
 
 1. Clone the Github repository
 ```sh
