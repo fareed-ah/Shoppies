@@ -4,23 +4,24 @@ Welcome to The Shoppies, a movie award show for entrepreneurs!
 Visit The Shoppies webpage [here](https://shoppies-six.vercel.app/) to search for your favourite movies and nominate your Top 5 picks that you believe deserve to win a Shoppy award!
 
 ## Installing and running in local dev environment 
-Open a terminal and run the following commands:
 
+1. Clone the Github repository
 ```sh
 git clone git@github.com:fareed-ah/Shoppies.git
 ```
+2. Change directories to the client folder
 ```sh
 cd Shoppies/client
 ```
+3. Intall yarn dependencies
 ```sh
 yarn install
 ```
-
+4. Run the dev script
 ```sh
 yarn dev
 ```
-
-Noow yoou should be able to. view the page at localhost:3000
+5. View the web page at [localhost:3000](localhost:3000)
 
 
 ## Features
