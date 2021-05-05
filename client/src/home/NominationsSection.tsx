@@ -36,7 +36,7 @@ export const NominationsSection: React.FC<NominationsSectionProps> = ({ nominati
     const classes = useStyles();
     return (
         <Box className={classes.root} >
-            <Typography className={classes.heading}> {nominations.length == 0 ? "You have no nominations" : "Your nominations"}</Typography>
+            <Typography className={classes.heading}> {nominations.length == 0 ? "You have no nominations" : `Your nominations (${nominations.length}/5)`}</Typography>
             <Box display="flex" flexDirection="column" flexGrow={1}>
                 {nominations.map((movie) => (
                     <ResultItem key={movie.imdbID} nominated={true} movie={movie} handleNomination={handleNomination} canNominate={canNominate} />

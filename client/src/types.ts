@@ -14,7 +14,13 @@ export type DetailedMovie = {
     imdbID: string,
     Runtime: string,
     Genre: string,
-    Released:string,
+    Released: string,
+    Rated: string,
+    imdbRating: string,
+    Plot: string,
+    Director: string,
+    Writer: string,
+    Actors:string,
 }
 
 export type SnackbarMessage = {
@@ -33,12 +39,12 @@ export const MaxNominationsExceeded: SnackbarMessage= {
     severity: "warning",
 }
 
-export const EmptyMovie:DetailedMovie = {
-    Title: "N/A",
-    Year: "N/A",
-    Poster: "N/A",
-    imdbID: "N/A",
-    Runtime: "N/A",
-    Genre: "N/A",
-    Released:"N/A",
-}
+// export const EmptyMovie:DetailedMovie = {
+//     Title: "N/A",
+//     Year: "N/A",
+//     Poster: "N/A",
+//     imdbID: "N/A",
+//     Runtime: "N/A",
+//     Genre: "N/A",
+//     Released:"N/A",
+// }
