@@ -20,7 +20,7 @@ The Shoppies webpage is built using the following libraries:
 -	[Material UI](https://material-ui.com/) – React UI Components 
 
 ## Hurdles during development
-Duplicate movies
-OMDB 1000 daily limit 
-Deciding how to chain axios requests
-Website redesgins
+- Duplicate movies
+- OMDB 1000 daily limit 
+- Deciding how to chain axios requests
+- Website redesgins
