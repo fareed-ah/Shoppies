@@ -6,8 +6,12 @@ Visit The Shoppies webpage [here](https://shoppies-six.vercel.app/) to search fo
 ## Features
 -	Search for your favourite movies with ease, the new and improved search bar shows results as you type. Clear the search bar with the click of a button.
 -	Search results are displayed with pagination and the user is informed how many results are retrieved.
--	Along with the movie title and date released users can also see the movie poster and genre. 
--	Notifications are displayed in the top right to inform the user when they reach 5 nominations as well as any search errors.
+-	Search results will show the movie title and date released users along with the movie poster and genre. 
+-	User can click on the movie poster to open a detailed popup of the movie which includes: movie title, poster, plot, release date, genre, age rating, and imdb rating.
+-	Error messages are displayed where the result should appear when applicable. 
+-	A banner notifying the user that they have reached 5 nominations will appear below the list of movie nominations.
+-	The page will automatically save nominations as the nominations are modified. Thus on refresh the page will retain the users nominations.
+-	The page is very responsive and works well on mobile as well!
 
 ## Built Using
 
@@ -19,7 +23,7 @@ The Shoppies webpage is built using the following libraries:
 -	[Material UI](https://material-ui.com/) – React UI Components 
 
 ## Hurdles during development
-- Duplicate movies
-- OMDB 1000 daily limit 
+- Query returned duplicate movies items
+- Reached OMDB 1000 daily limit 
 - Deciding how to chain axios requests
-- Website redesgins
+- Redesigned the entire website about three times
