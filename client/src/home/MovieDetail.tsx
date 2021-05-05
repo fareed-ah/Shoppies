@@ -1,4 +1,4 @@
-import { Box, createStyles, makeStyles, Typography, Paper, Grid } from '@material-ui/core';
+import { createStyles, makeStyles, Typography, Paper, Grid } from '@material-ui/core';
 import React from 'react'
 import { DetailedMovie } from '../types';
 
