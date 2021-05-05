@@ -10,7 +10,6 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             maxWidth: 700,
-            maxHeight: 300
         },
 
         subtitle: {
@@ -18,7 +17,7 @@ const useStyles = makeStyles(() =>
         },
 
         poster: {
-            maxHeight: 300
+            maxWidth: 200,
         }
 
     }),

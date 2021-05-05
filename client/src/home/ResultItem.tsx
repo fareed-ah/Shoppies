@@ -77,7 +77,7 @@ export const ResultItem: React.FC<ResultItemProps> = ({ nominated, movie, handle
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" spacing={2}>
+                    <Grid item xs container direction="column" alignItems="center" spacing={2}>
                         <Grid item xs>
                             <Typography variant="subtitle1">
                                 {movie.Title}

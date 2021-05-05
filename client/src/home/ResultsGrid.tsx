@@ -41,16 +41,17 @@ export const ResultsGrid: React.FC<ResultsGridProps> = ({ searchQuery, handleNom
     const [error, setError] = useState<string | undefined>();
 
     useEffect(() => {
-        setPage(1)
-    }, [searchQuery])
-
-    useEffect(() => {
         if (searchQuery == '') {
             setSearchResults([])
             setTotalResults(0)
             setError(undefined);
             return;
         }
+        setPage(1)
+    }, [searchQuery])
+
+    useEffect(() => {
+
         axios.get(`https://www.omdbapi.com/?apikey=dd016357&s=${searchQuery}*&type=movie&page=${page}`)
             .then(res => {
                 if (res.data.Response == "True") {
@@ -73,9 +74,9 @@ export const ResultsGrid: React.FC<ResultsGridProps> = ({ searchQuery, handleNom
                 setSearchResults([...new Set(movies)]);
                 setTotalResults(res.data.totalResults);
             }).catch((error: Error) => {
+                setError(error.message);
                 setSearchResults([]);
                 setTotalResults(0);
-                setError(error.message);
             })
     }, [searchQuery, page]);
 
@@ -103,7 +104,7 @@ export const ResultsGrid: React.FC<ResultsGridProps> = ({ searchQuery, handleNom
                 <ResultItem key={movie.imdbID} nominated={false} movie={movie} handleNomination={handleNomination} canNominate={canNominate} />
             ))}
 
-            {error &&
+            {(error && (searchQuery != '')) &&
                 <Alert style={{ maxWidth: "100" }} severity="error">
                     {error}
                 </Alert>
