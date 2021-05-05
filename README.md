@@ -1,7 +1,7 @@
 # Shoppies
 Welcome to The Shoppies, a movie award show for entrepreneurs!
 
-Visit The Shoppies webpage here to search for your favourite movies and nominate your Top 5 picks that you believe deserve to win a Shoppy award!
+Visit The Shoppies webpage [here](https://shoppies-six.vercel.app/) to search for your favourite movies and nominate your Top 5 picks that you believe deserve to win a Shoppy award!
 
 ## Features
 -	Search for your favourite movies with ease
@@ -24,5 +24,3 @@ Duplicate movies
 OMDB 1000 daily limit 
 Deciding how to chain axios requests
 Website redesgins
-
-
