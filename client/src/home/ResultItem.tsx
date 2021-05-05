@@ -1,7 +1,8 @@
-import { makeStyles, createStyles, Paper, Typography, IconButton, Grid } from '@material-ui/core';
+import { makeStyles, createStyles, Paper, Typography, IconButton, Grid, Modal } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 import React from 'react'
 import { DetailedMovie } from '../types';
+import { MovieDetail } from './MovieDetail';
 
 interface ResultItemProps {
     nominated: boolean
@@ -19,14 +20,17 @@ const useStyles = makeStyles(() =>
             alignItems: "center",
             backgroundColor: "#F2F5F7",
             margin: 6,
-            borderColor: "#000",
-            border: 1,
         },
         poster: {
             height: 100,
             width: 75,
             borderRadius: 8,
+            transition: "transform 100ms ease- out, border- radius 200ms ease - out",
+            "&:hover": {
+                transform: "scale3d(1.05, 1.05, 1)",
+            },
         },
+
         actionButton: {
             color: "#FFF",
             margin: 8,
@@ -46,6 +50,16 @@ const useStyles = makeStyles(() =>
 
 export const ResultItem: React.FC<ResultItemProps> = ({ nominated, movie, handleNomination, canNominate }: ResultItemProps) => {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     if (movie.imdbID == "tt2283336") {
         console.log(movie)
     }
@@ -58,7 +72,9 @@ export const ResultItem: React.FC<ResultItemProps> = ({ nominated, movie, handle
                     </IconButton >
                 </Grid>
                 <Grid item>
-                    <img className={classes.poster} src={movie.Poster == "N/A" ? "/images/posterAlt.png" : movie.Poster}></img>
+                    <Paper onClick={handleOpen} className={classes.poster}>
+                        <img className={classes.poster} src={movie.Poster == "N/A" ? "/images/posterAlt.png" : movie.Poster}></img>
+                    </Paper>
                 </Grid>
                 <Grid item xs={12} sm container>
                     <Grid item xs container direction="column" spacing={2}>
@@ -76,6 +92,15 @@ export const ResultItem: React.FC<ResultItemProps> = ({ nominated, movie, handle
                     </Grid>
                 </Grid>
             </Grid>
+            <Modal
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                <MovieDetail movie={movie} />
+            </Modal>
         </Paper >
     );
 }
