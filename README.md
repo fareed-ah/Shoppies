@@ -17,7 +17,7 @@ Visit The Shoppies webpage [here](https://shoppies-six.vercel.app/) to search fo
 
 The Shoppies webpage is built using the following libraries:
 -	[Nextjs](https://nextjs.org/) – Front end framework 
--	[TypeScript](https://www.typescriptlang.org/docs/) - The Shoppies is built with TypeScript to take advantage of its type capabilites.
+-	[TypeScript](https://www.typescriptlang.org/docs/) - The Shoppies is built with TypeScript to take advantage of static typing
 -	[Verecel](https://vercel.com/home?utm_source=next-site&utm_medium=banner&utm_campaign=next-website) – Web hosting 
 -	[OMDBApi](http://omdbapi.com/) – External API used to fetch movies 
 -	[Material UI](https://material-ui.com/) – React UI Components 
